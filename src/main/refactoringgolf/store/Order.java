@@ -75,14 +75,14 @@ public class Order {
 			float totalItem=0;
 			float discount =0;
 			float itemAmount = item.getTotalPrice();
-			if (item.getProduct().getCategory() == ProductCategory.Accessories) {
+			if (item.isAccesory()) {
 				discount = accesoriesDiscount(itemAmount);
 			}
-			if (item.getProduct().getCategory() == ProductCategory.Bikes) {
+			if (item.isBike()) {
 				// 20% discount for Bikes
 				discount = bikesDiscount(itemAmount);
 			}
-			if (item.getProduct().getCategory() == ProductCategory.Cloathing) {
+			if (item.isCloathing()) {
 				discount = cloathingDiscount(item);
 			}
 			totalItem = itemAmount - discount;

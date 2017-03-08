@@ -24,4 +24,14 @@ public class OrderItem {
 	public int getTotalPrice(){
 		return (int) (product.getUnitPrice() * quantity);
 	}
+	
+	public boolean isAccesory(){
+		return product.getCategory() == ProductCategory.Accessories;
+	}
+	public boolean isBike(){
+		return product.getCategory() == ProductCategory.Bikes;
+	}
+	public boolean isCloathing(){
+		return product.getCategory() == ProductCategory.Cloathing;
+	}
 }
