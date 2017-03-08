@@ -120,6 +120,6 @@ public class Order {
 	}
 
 	private boolean priceOverThanNinetyNine(float itemAmount) {
-		return itemAmount >= 100;
+		return itemAmount > 99;
 	}
 }
