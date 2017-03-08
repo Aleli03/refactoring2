@@ -73,27 +73,41 @@ public class Order {
 		float totalItems=0;
 		for (OrderItem item : items) {
 			float totalItem=0;
+			float discount =0;
 			float itemAmount = item.getTotalPrice();
 			if (item.getProduct().getCategory() == ProductCategory.Accessories) {
-				float booksDiscount = 0;
-				if (itemAmount >= 100) {
-					booksDiscount = itemAmount * 10 / 100;
-				}
-				totalItem = itemAmount - booksDiscount;
+				discount = accesoriesDiscount(itemAmount);
 			}
 			if (item.getProduct().getCategory() == ProductCategory.Bikes) {
 				// 20% discount for Bikes
-				totalItem = itemAmount - itemAmount * 20 / 100;
+				discount = bikesDiscount(itemAmount);
 			}
 			if (item.getProduct().getCategory() == ProductCategory.Cloathing) {
-				float cloathingDiscount = 0;
-				if (item.getQuantity() > 2) {
-					cloathingDiscount = item.getProduct().getUnitPrice();
-				}
-				totalItem = itemAmount - cloathingDiscount;
+				discount = cloathingDiscount(item);
 			}
+			totalItem = itemAmount - discount;
 			totalItems += totalItem;
 		}
 		return totalItems;
+	}
+
+	private float cloathingDiscount(OrderItem item) {
+		float cloathingDiscount = 0;
+		if (item.getQuantity() > 2) {
+			cloathingDiscount = item.getProduct().getUnitPrice();
+		}
+		return cloathingDiscount;
+	}
+
+	private float bikesDiscount(float itemAmount) {
+		return itemAmount * 20 / 100;
+	}
+
+	private float accesoriesDiscount(float itemAmount) {
+		float booksDiscount = 0;
+		if (itemAmount >= 100) {
+			booksDiscount = itemAmount * 10 / 100;
+		}
+		return booksDiscount;
 	}
 }
