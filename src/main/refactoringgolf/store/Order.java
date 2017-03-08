@@ -72,18 +72,20 @@ public class Order {
 	private float totalItems() {
 		float totalItems=0;
 		for (OrderItem item : items) {
-			float totalItem=0;
-			float discount =0;
-			float itemAmount = item.getTotalPrice();
-			discount = calculatingDiscount(item, itemAmount);
-			totalItem = itemAmount - discount;
+			float discount = selectingDiscount(item);
+			float totalItem = applyingDiscount(item, discount);
 			totalItems += totalItem;
 		}
 		return totalItems;
 	}
 
-	private float calculatingDiscount(OrderItem item, float itemAmount) {
+	private float applyingDiscount(OrderItem item, float discount) {
+		return item.getTotalPrice() - discount;
+	}
+
+	private float selectingDiscount(OrderItem item) {
 		float discount = 0;
+		float itemAmount = item.getTotalPrice();
 		if (item.isAccesory()) {
 			discount = accesoriesDiscount(itemAmount);
 		}
@@ -99,7 +101,7 @@ public class Order {
 
 	private float cloathingDiscount(OrderItem item) {
 		float cloathingDiscount = 0;
-		if (item.getQuantity() > 2) {
+		if (item.moreThanTwoItems()) {
 			cloathingDiscount = item.getProduct().getUnitPrice();
 		}
 		return cloathingDiscount;
@@ -111,9 +113,13 @@ public class Order {
 
 	private float accesoriesDiscount(float itemAmount) {
 		float booksDiscount = 0;
-		if (itemAmount >= 100) {
+		if (priceOverThanNinetyNine(itemAmount)) {
 			booksDiscount = itemAmount * 10 / 100;
 		}
 		return booksDiscount;
+	}
+
+	private boolean priceOverThanNinetyNine(float itemAmount) {
+		return itemAmount >= 100;
 	}
 }

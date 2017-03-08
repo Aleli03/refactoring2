@@ -24,7 +24,9 @@ public class OrderItem {
 	public int getTotalPrice(){
 		return (int) (product.getUnitPrice() * quantity);
 	}
-	
+	public boolean moreThanTwoItems(){
+		return quantity>2;
+	}
 	public boolean isAccesory(){
 		return product.getCategory() == ProductCategory.Accessories;
 	}
