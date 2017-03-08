@@ -53,7 +53,24 @@ public class Order {
 	}
 
 	public float total() {
-		float totalItems = 0;
+		float totalItems = totalItems();
+		float shipping = shippingCost();
+		float tax= tax(totalItems);
+		return totalItems + tax + shipping;
+	}
+
+	private float shippingCost() {		
+		if (this.deliveryCountry == "USA")
+			return 0;
+		return 15;	
+	}
+
+	private float tax(float totalItems) {
+		return totalItems * 5 / 100;
+	}
+
+	private float totalItems() {
+		float totalItems=0;
 		for (OrderItem item : items) {
 			float totalItem=0;
 			float itemAmount = item.getProduct().getUnitPrice() * item.getQuantity();
@@ -77,13 +94,6 @@ public class Order {
 			}
 			totalItems += totalItem;
 		}
-
-		if (this.deliveryCountry == "USA"){
-			// total=totalItems + tax + 0 shipping
-			return totalItems + totalItems * 5 / 100;
-		}
-
-		// total=totalItemst + tax + 15 shipping
-		return totalItems + totalItems * 5 / 100 + 15;
+		return totalItems;
 	}
 }
