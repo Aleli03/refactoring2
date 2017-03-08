@@ -75,20 +75,26 @@ public class Order {
 			float totalItem=0;
 			float discount =0;
 			float itemAmount = item.getTotalPrice();
-			if (item.isAccesory()) {
-				discount = accesoriesDiscount(itemAmount);
-			}
-			if (item.isBike()) {
-				// 20% discount for Bikes
-				discount = bikesDiscount(itemAmount);
-			}
-			if (item.isCloathing()) {
-				discount = cloathingDiscount(item);
-			}
+			discount = calculatingDiscount(item, itemAmount);
 			totalItem = itemAmount - discount;
 			totalItems += totalItem;
 		}
 		return totalItems;
+	}
+
+	private float calculatingDiscount(OrderItem item, float itemAmount) {
+		float discount = 0;
+		if (item.isAccesory()) {
+			discount = accesoriesDiscount(itemAmount);
+		}
+		if (item.isBike()) {
+			// 20% discount for Bikes
+			discount = bikesDiscount(itemAmount);
+		}
+		if (item.isCloathing()) {
+			discount = cloathingDiscount(item);
+		}
+		return discount;
 	}
 
 	private float cloathingDiscount(OrderItem item) {
