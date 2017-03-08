@@ -73,7 +73,7 @@ public class Order {
 		float totalItems=0;
 		for (OrderItem item : items) {
 			float totalItem=0;
-			float itemAmount = item.getProduct().getUnitPrice() * item.getQuantity();
+			float itemAmount = item.getTotalPrice();
 			if (item.getProduct().getCategory() == ProductCategory.Accessories) {
 				float booksDiscount = 0;
 				if (itemAmount >= 100) {
